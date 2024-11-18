@@ -30,17 +30,27 @@ public class ProductsControllerImpl implements ProductsController {
   }
 
   @GetMapping("/{id}")
-  public Product getProductById(@PathVariable Long id) {
+  public ProductVo getProductById(@PathVariable Long id) {
     return service.findById(id);
   }
 
+  @GetMapping("/count")
+  public Long getCountProducts() {
+    return service.countProducts();
+  }
+
+  @GetMapping("/name/{name}")
+  public List<ProductVo> getProductByName(@PathVariable String name) {
+    return service.findByName(name);
+  }
+
   @PostMapping
-  public Product createProduct(@RequestBody ProductBasicVo product) {
+  public ProductVo createProduct(@RequestBody ProductBasicVo product) {
     return service.create(product);
   }
 
   @PutMapping("/{id}")
-  public Product updateProduct(@PathVariable Long id, @RequestBody ProductBasicVo product) {
+  public ProductVo updateProduct(@PathVariable Long id, @RequestBody ProductBasicVo product) {
     return service.update(id, product);
   }
 

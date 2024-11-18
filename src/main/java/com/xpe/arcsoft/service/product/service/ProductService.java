@@ -1,20 +1,23 @@
 package com.xpe.arcsoft.service.product.service;
 
-import com.xpe.arcsoft.service.product.model.Product;
 import com.xpe.arcsoft.service.product.model.vo.ProductBasicVo;
 import com.xpe.arcsoft.service.product.model.vo.ProductVo;
 import java.util.List;
 
 public interface ProductService {
 
-  public List<ProductVo> findAllProducts();
+  List<ProductVo> findAllProducts();
 
-  public Product findById(Long id);
+  Long countProducts();
 
-  public Product create(ProductBasicVo productBasicVo);
+  ProductVo findById(Long id);
 
-  public Product update(Long id, ProductBasicVo productBasicVo);
+  List<ProductVo> findByName(String name);
 
-  public void deleteById(Long id);
+  ProductVo create(ProductBasicVo productBasicVo);
+
+  ProductVo update(Long id, ProductBasicVo productBasicVo);
+
+  void deleteById(Long id);
 
 }

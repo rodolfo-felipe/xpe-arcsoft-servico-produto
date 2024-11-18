@@ -30,18 +30,32 @@ public interface ProductsController {
   List<ProductVo> getAllProducts();
 
   @Operation(
-      description = "Retrieves all products",
+      description = "Retrieve products count",
       responses = {
-          @ApiResponse(responseCode = "200", description = "Products successfully retrieved"),
+          @ApiResponse(responseCode = "200", description = "Products count successfully retrieved"),
       })
-  Product getProductById(@Parameter(description = "Product id") Long id);
+  Long getCountProducts();
+
+  @Operation(
+      description = "Retrieve product by id",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Product successfully retrieved"),
+      })
+  ProductVo getProductById(@Parameter(description = "Product id") Long id);
+
+  @Operation(
+      description = "Retrieve product by name",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "Product successfully retrieved"),
+      })
+  List<ProductVo> getProductByName(@Parameter(description = "Product name") String name);
 
   @Operation(
       description = "Create product",
       responses = {
           @ApiResponse(responseCode = "200", description = "Product successfully created"),
       })
-  Product createProduct(
+  ProductVo createProduct(
       @Parameter(description = "Product data to be created") ProductBasicVo product) ;
 
   @Operation(
@@ -49,7 +63,7 @@ public interface ProductsController {
       responses = {
           @ApiResponse(responseCode = "200", description = "Product successfully updated"),
       })
-  Product updateProduct(
+  ProductVo updateProduct(
       @Parameter(description = "Product id") Long id,
       @Parameter(description = "Product data to be updated") ProductBasicVo product);
 

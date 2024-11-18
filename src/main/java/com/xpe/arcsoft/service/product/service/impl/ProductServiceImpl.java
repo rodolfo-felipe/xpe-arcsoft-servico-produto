@@ -13,28 +13,47 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepository repository;
+  private final ProductRepository repository;
 
-    public List<ProductVo> findAllProducts() {
-        return repository.findAllProducts();
-    }
+  public List<ProductVo> findAllProducts() {
+    return repository.findAllProducts();
+  }
 
-    public Product findById(Long id) {
-        return repository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Product not found"));
-    }
+  public Long countProducts() {
+    return repository.count();
+  }
 
-    public Product create(ProductBasicVo productBasicVo) {
-      Product product = Product.builder().name(productBasicVo.getName()).build();
-      return repository.save(product);
-    }
+  public ProductVo findById(Long id) {
+    Product product = repository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+    return buildProductVo(product);
+  }
 
-    public Product update(Long id, ProductBasicVo productBasicVo) {
-      Product product = Product.builder().id(id).name(productBasicVo.getName()).build();
-      return repository.save(product);
-    }
+  public List<ProductVo> findByName(String name) {
+    return repository.findByName(name);
+  }
 
-    public void deleteById(Long id) {
-        repository.deleteById(id);
-    }
+  public ProductVo create(ProductBasicVo productBasicVo) {
+    Product product = Product.builder().name(productBasicVo.getName()).build();
+    return saveProduct(product);
+  }
+
+  public ProductVo update(Long id, ProductBasicVo productBasicVo) {
+    Product product = Product.builder().id(id).name(productBasicVo.getName()).build();
+    return saveProduct(product);
+  }
+
+  private ProductVo saveProduct(Product product) {
+    product = repository.save(product);
+    return buildProductVo(product);
+  }
+
+
+  private ProductVo buildProductVo(Product product) {
+    return ProductVo.builder().id(product.getId()).name(product.getName()).build();
+  }
+
+  public void deleteById(Long id) {
+    repository.deleteById(id);
+  }
 }
